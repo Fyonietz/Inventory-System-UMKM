@@ -10,8 +10,8 @@
     #define EXPORT
 #endif
 extern "C" struct EXPORT Pnix{
-    std::string copy_block(std::string layout, std::string tag){
-        std::fstream file(layout);
+ std::string copy_block(std::string layout, std::string tag){
+    std::fstream file(layout);
     if (!file.is_open()) {
         std::cerr << "Cannot open layout file: " << layout << std::endl;
         return "";
@@ -19,18 +19,24 @@ extern "C" struct EXPORT Pnix{
 
     std::stringstream file_buffer;
     file_buffer << file.rdbuf();
-    std::string file_buffer_string(file_buffer.str());
+    std::string content = file_buffer.str();
 
-    size_t scan_begin = file_buffer_string.find(tag);
-    size_t scan_end = file_buffer_string.find("@end", scan_begin);
+    // Construct comment tags
+    std::string tag_start = "<!-- " + tag + " -->";
+    std::string tag_end = "<!-- @end -->";
 
-    std::string matching = file_buffer_string.substr(
-        scan_begin + tag.length(),
-        scan_end - (scan_begin + tag.length())
-    );
+    size_t start_pos = content.find(tag_start);
+    start_pos += tag_start.length(); // move past the start tag
+    size_t end_pos = content.find(tag_end, start_pos);
+  
+    // Optional: trim leading whitespace or newlines
+    size_t block_start = content.find_first_not_of("\n\r \t", start_pos);
+    if (block_start == std::string::npos || block_start > end_pos)
+        return "";
 
-    return matching;
-};
+    return content.substr(block_start, end_pos - block_start);
+}
+
     void insert_block(std::string child, std::string tag) {
     std::ifstream file_input(child);
     if (!file_input.is_open()) {

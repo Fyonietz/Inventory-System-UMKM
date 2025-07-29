@@ -13,7 +13,7 @@ extern "C" EXPORT void update(struct mg_context *context) {
     }
     std::cout <<info << "Routes Check" << std::endl <<std::flush;
     // Register all routes here
-    Route.add(context, "/about", about, 0);
-    Route.add(context,"/",home,0);
+    Route.add(context, "/time",times, 0);
+    Route.add(context, "/stock",stock, 0);
     std::cout <<info << "Routes Safe" << std::flush <<std::endl;
 }   

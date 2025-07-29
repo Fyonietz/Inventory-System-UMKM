@@ -6,10 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    @menu
-
-    <div><li>Menu</li></div>
-    
-  
+    @header
 </body>
 </html>
