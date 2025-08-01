@@ -35,3 +35,8 @@ EXPORT int stock(struct mg_connection *connection,void *callback){
     Server.SSR("public/views/stock.htpp",connection);
     return 200;
 }
+
+EXPORT int item(struct mg_connection *connection,void *callback){
+    Server.SSR("public/views/item.htpp",connection);
+    return 200;
+}

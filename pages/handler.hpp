@@ -8,3 +8,4 @@
 EXPORT std::string get_local_system_time();
 EXPORT int times(struct mg_connection *connection,void *callback);
 EXPORT int stock(struct mg_connection *connection,void *callback);
+EXPORT int item(struct mg_connection *connection,void *callback);
